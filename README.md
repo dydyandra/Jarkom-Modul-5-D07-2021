@@ -12,7 +12,12 @@ Daanii Nabil Ghinannafsi Kusnanta | 05111940000163 |
 
 ## Daftar Isi
 * [Topologi Jaringan](#topologi)
-* [Subnetting VLSM](#vlsm)
+* [Subnetting dengan Teknik VLSM](#vlsm)
+  * [Pembagian Subnet](#subnetting)
+  * [Perhitungan](#perhitungan)
+* [Pembagian IP](#bagi)
+  * [Pohon IP](#tree)
+  * [Tabel IP](#tabel)
 * [Routing](#routing)
 * [Setting IP](#ip)
 * [Soal 1](#soal1)
@@ -24,12 +29,10 @@ Daanii Nabil Ghinannafsi Kusnanta | 05111940000163 |
 * [Kendala Yang Dialami](#kendala)
 * [Referensi](#referensi)
 
-## Soal dan Pembahasan
-### Persiapan
-#### <a name="topologi"></a> A
+## <a name="topologi"></a> Topologi Jaringan
 
-Soal : Tugas pertama kalian yaitu membuat topologi jaringan sesuai dengan rancangan yang diberikan Luffy dibawah ini
-
+Membuat topologi jaringan sesuai dengan rancangan yang diberikan Luffy dibawah ini:
+- Doriki adalah DNS Server
 - Jipangu adalah DHCP Server
 - Foosha, Water7, dan Guanhao adalah DHCP Relay
 - Doriki adalah DNS Server
@@ -37,11 +40,11 @@ Soal : Tugas pertama kalian yaitu membuat topologi jaringan sesuai dengan rancan
 
 ![topologi gns](./images/0.1.PNG)
 
-#### <a name="vlsm"></a> B
+## <a name="vlsm"></a> Subnetting dengan Teknik VLSM
 
-Soal : Karena kalian telah belajar subnetting dan routing, Luffy ingin meminta kalian untuk membuat topologi tersebut menggunakan teknik CIDR atau VLSM.
+Membuat topologi menggunakan teknik VLSM.
 
-#### Pembagian Subnet
+### <a name="subnetting"></a> Pembagian Subnet
 
 Pembagian subnet menggunakan VLSM. Berdasarkan topologi yang telah dibuat, dapat ditentukan labelling netmask sebagai berikut
 
@@ -61,22 +64,23 @@ Berikut ini adalah jumlah ip untuk masing-masing subnet yang telah ditentukan.
 |   A8   |     3     |   /29   |
 |   TOTAL  |     1314     |   /21   |
 
-Link perhitungan: <a href="https://docs.google.com/spreadsheets/d/1mJUFhs-Kh8UHh4d9NbaWPKwmRJN63QzTzxOjL84Yjg4/edit#gid=179543887">Perhitungan Modul 5</a>
+### <a name="perhitungan"></a> Perhitungan
 
-### Pembagian IP
-####  Tree
+Perhitungan tercantum pada link berikut: <a href="https://docs.google.com/spreadsheets/d/1mJUFhs-Kh8UHh4d9NbaWPKwmRJN63QzTzxOjL84Yjg4/edit#gid=179543887">Perhitungan Modul 5</a>
+
+## <a name="bagi"></a> Pembagian IP
+### <a name="tree"></a> Tree
 
 ![vlsm tree](./images/0.3.PNG)
 
 
-####  Tabel 
-
+### <a name="tabel"></a> Tabel 
 
 ![vlsm tabel](./images/0.4.PNG)
 
-### <a name="routing"></a> C
+## <a name="routing"></a> Routing
 
-Soal : Setelah melakukan subnetting, kalian juga diharuskan melakukan Routing agar setiap perangkat pada jaringan tersebut dapat terhubung.
+Setelah melakukan subnetting, lakukan Routing agar setiap perangkat pada jaringan tersebut dapat terhubung.
 
 Sebelum melakukan routing, membuat konfigurasi untuk masing-masing node pada `Configure > Edit Network Configuration`. Konfigurasi ini dilakukan supaya kita dapat mengetahui IP address dan gateway masing-masing node sehingga dapat saling dihubungkan saat membuat routing. Berikut adalah salah satu konfigurasi yang dilakukan, yaitu pada router Foosha
 
@@ -124,9 +128,9 @@ route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.195.0.1
 route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.195.0.5
 ```
 
-### <a name="ip"></a> D
+## <a name="ip"></a> Setting IP
 
-Soal : Tugas berikutnya adalah memberikan IP pada subnet Blueno, Cipher, Fukurou, dan Elena secara dinamis menggunakan bantuan DHCP server. Kemudian kalian ingat bahwa kalian harus setting DHCP Relay pada router yang menghubungkannya.
+Memberikan IP pada subnet Blueno, Cipher, Fukurou, dan Elena secara dinamis menggunakan bantuan DHCP server. Kemudian, setting DHCP Relay pada router yang menghubungkannya.
 
 DHCP Server diletakkan pada Jipangu dengan file konfigurasi `/etc/dhcp/dhcpd.conf`sebagai berikut. Konfigurasi ini digunakan untuk memberikan IP address untuk masing-masing client.
 
@@ -187,12 +191,13 @@ OPTIONS=""
 
 IP `192.195.0.19` adalah IP Address dari DHCP Server yaitu Jipangu, lalu mengarahkan interface pada `eth0 eth1 eth2 eth3` supaya DHCP Relay dapat meneruskan DHCP request pada DHCP Server
 
-### <a name="soal1"></a> No 1
-#### Soal
+## Soal dan Pembahasan
+## <a name="soal1"></a> Nomor 1
+### Soal
 
 Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk mengkonfigurasi Foosha menggunakan iptables, tetapi Luffy tidak ingin menggunakan MASQUERADE.
 
-#### Jawaban
+### Jawaban
 
 Pada Foosha ditambahkan rule Iptables di bawah ini:
 
@@ -200,7 +205,7 @@ Pada Foosha ditambahkan rule Iptables di bawah ini:
 iptables -t nat -A POSTROUTING -s 192.195.0.0/21 -o eth0 -j SNAT --to-source 192.168.122.25
 ```
 
-##### Keterangan: 
+### Keterangan: 
 
 `-t nat`: Menggunakan tabel NAT karena akan mengubah alamat asal dari paket
 
@@ -234,19 +239,19 @@ Dan tambahkan
 allow-query{any;};
 ```
 
-### <a name="soal2"></a> No 2
+## <a name="soal2"></a> Nomor 2
 
-#### Soal
+### Soal
 Kalian diminta untuk mendrop semua akses HTTP dari luar Topologi kalian pada server yang merupakan DHCP Server dan DNS Server demi menjaga keamanan.
 
-#### Jawaban
+### Jawaban
 Pada Foosha ditambahkan rule Iptables di bawah ini:
 
 ```bash
 iptables -A FORWARD -d 192.195.0.16/29 -i eth0 -p tcp --dport 80 -j DROP
 ```
 
-##### Keterangan:
+### Keterangan:
 
 `-A FORWARD`: Menggunakan chain FORWARD
 
@@ -262,18 +267,18 @@ iptables -A FORWARD -d 192.195.0.16/29 -i eth0 -p tcp --dport 80 -j DROP
 
 
 
-### <a name="soal3"></a> No 3
+## <a name="soal3"></a> Nomor 3
 
-#### Soal
+### Soal
 Karena kelompok kalian maksimal terdiri dari 3 orang. Luffy meminta kalian untuk membatasi DHCP dan DNS Server hanya boleh menerima maksimal 3 koneksi ICMP secara bersamaan menggunakan iptables, selebihnya didrop.
 
-#### Jawaban
+### Jawaban
 Pada Jipangu dan Doriki ditambahkan rule iptables di bawah ini:
 
 ```bash
 iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
 ```
-##### Keterangan:
+### Keterangan:
 
 `-A INPUT`: Menggnakan chain INPUT
 
@@ -287,13 +292,13 @@ iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j
 
 `- j DROP`: Paket di-drop
 
-### <a name="soal4"></a> No 4
+## <a name="soal4"></a> Nomor 4
 
-#### Soal
+### Soal
 Kemudian kalian diminta untuk membatasi akses ke Doriki yang berasal dari subnet Blueno, Cipher, Elena dan Fukuro dengan beraturan sebagai berikut
 Akses dari subnet Blueno dan Cipher hanya diperbolehkan pada pukul 07.00 - 15.00 pada hari Senin sampai Kamis.
 
-#### Jawaban
+### Jawaban
 Pada Doriki ditambahkan rule Iptables di bawah ini:
 
 ```bash
@@ -308,7 +313,7 @@ iptables -A INPUT -s 192.195.0.128/25 -d 192.195.0.16/29 -m time --timestart 07:
 iptables -A INPUT -s 192.195.0.128/25 -j REJECT
 ```
 
-##### Keterangan:
+### Keterangan:
 
 `-A INPUT` : Menggunakan chain INPUT
 
@@ -330,17 +335,17 @@ iptables -A INPUT -s 192.195.0.128/25 -j REJECT
 
 `- j REJECT` : Paket ditolak
 
-#### Testing
+### Testing
 dapat dites dengan melakukan ping dari Cipher/Blueno ke Doriki
 ![4.1](./images/4.1.PNG)
 
 ![4.2](./images/4.2.PNG)
 
-### <a name="soal5"></a> No 5
-#### Soal
+## <a name="soal5"></a> Nomor 5
+### Soal
 Akses dari subnet Elena dan Fukuro hanya diperbolehkan pada pukul 15.01 hingga pukul 06.59 setiap harinya.
 
-#### Jawaban
+### Jawaban
 Pada Doriki ditambahkan rule Iptables di bawah ini:
 
 ```bash
@@ -355,7 +360,7 @@ iptables -A INPUT -s 192.195.1.0/24 -m time --timestart 15:01 --timestop 06:59 -
 iptables -A INPUT -s 192.195.1.0/24 -j REJECT
 ```
 
-##### Keterangan
+### Keterangan
 `-A INPUT` : Menggunakan chain INPUT
 
 `-s 192.195.2.0/23` : Mendifinisikan alamat asal dari paket yaitu IP dari subnet Elena
@@ -375,19 +380,19 @@ iptables -A INPUT -s 192.195.1.0/24 -j REJECT
 
 `- j REJECT` : Paket ditolak
 
-#### Testing
+### Testing
 dapat dites dengan melakukan ping dari Elena/Fukurou ke Doriki
 ![5.1](./images/5.1.PNG)
 
 
 ![5.2](./images/5.2.PNG)
 
-### <a name="soal6"></a> No 6
+## <a name="soal6"></a> Nomor 6
 
-#### Soal
+### Soal
 Karena kita memiliki 2 Web Server, Luffy ingin Guanhao disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada Jorge dan Maingate
 
-#### Jawaban
+### Jawaban
 Ditambahkan perintah iptables sebagai berikut di Guanhao:
 
 ```
