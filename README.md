@@ -6,10 +6,27 @@ Amanda Rozi Kurnia | 05111940000094 |
 Dyandra Paramitha W. | 05111940000119 |
 Daanii Nabil Ghinannafsi Kusnanta | 05111940000163 |
 
+## Notes
+[Soal Shift 5](https://docs.google.com/document/d/1Sc2jTlqmyM149yi4QzOGijyjPmSeEoy14Ajg9MnmkuY/edit?usp=sharing) <br>
+**Prefix:** 192.195
+
+## Daftar Isi
+* [Topologi Jaringan](#topologi)
+* [Subnetting VLSM](#vlsm)
+* [Routing](#routing)
+* [Setting IP](#ip)
+* [Soal 1](#soal1)
+* [Soal 2](#soal2)
+* [Soal 3](#soal3)
+* [Soal 4](#soal4)
+* [Soal 5](#soal5)
+* [Soal 6](#soal6)
+* [Kendala Yang Dialami](#kendala)
+* [Referensi](#referensi)
 
 ## Soal dan Pembahasan
 ### Persiapan
-#### A
+#### <a name="topologi"></a> A
 
 Soal : Tugas pertama kalian yaitu membuat topologi jaringan sesuai dengan rancangan yang diberikan Luffy dibawah ini
 
@@ -20,7 +37,7 @@ Soal : Tugas pertama kalian yaitu membuat topologi jaringan sesuai dengan rancan
 
 ![topologi gns](./images/0.1.PNG)
 
-#### B
+#### <a name="vlsm"></a> B
 
 Soal : Karena kalian telah belajar subnetting dan routing, Luffy ingin meminta kalian untuk membuat topologi tersebut menggunakan teknik CIDR atau VLSM.
 
@@ -57,7 +74,7 @@ Link perhitungan: <a href="https://docs.google.com/spreadsheets/d/1mJUFhs-Kh8UHh
 
 ![vlsm tabel](./images/0.4.PNG)
 
-### C
+### <a name="routing"></a> C
 
 Soal : Setelah melakukan subnetting, kalian juga diharuskan melakukan Routing agar setiap perangkat pada jaringan tersebut dapat terhubung.
 
@@ -107,7 +124,7 @@ route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.195.0.1
 route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.195.0.5
 ```
 
-### D
+### <a name="ip"></a> D
 
 Soal : Tugas berikutnya adalah memberikan IP pada subnet Blueno, Cipher, Fukurou, dan Elena secara dinamis menggunakan bantuan DHCP server. Kemudian kalian ingat bahwa kalian harus setting DHCP Relay pada router yang menghubungkannya.
 
@@ -170,7 +187,7 @@ OPTIONS=""
 
 IP `192.195.0.19` adalah IP Address dari DHCP Server yaitu Jipangu, lalu mengarahkan interface pada `eth0 eth1 eth2 eth3` supaya DHCP Relay dapat meneruskan DHCP request pada DHCP Server
 
-### No 1
+### <a name="soal1"></a> No 1
 #### Soal
 
 Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk mengkonfigurasi Foosha menggunakan iptables, tetapi Luffy tidak ingin menggunakan MASQUERADE.
@@ -217,7 +234,7 @@ Dan tambahkan
 allow-query{any;};
 ```
 
-### No 2
+### <a name="soal2"></a> No 2
 
 #### Soal
 Kalian diminta untuk mendrop semua akses HTTP dari luar Topologi kalian pada server yang merupakan DHCP Server dan DNS Server demi menjaga keamanan.
@@ -245,7 +262,7 @@ iptables -A FORWARD -d 192.195.0.16/29 -i eth0 -p tcp --dport 80 -j DROP
 
 
 
-### No 3
+### <a name="soal3"></a> No 3
 
 #### Soal
 Karena kelompok kalian maksimal terdiri dari 3 orang. Luffy meminta kalian untuk membatasi DHCP dan DNS Server hanya boleh menerima maksimal 3 koneksi ICMP secara bersamaan menggunakan iptables, selebihnya didrop.
@@ -270,7 +287,7 @@ iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j
 
 `- j DROP`: Paket di-drop
 
-### No 4
+### <a name="soal4"></a> No 4
 
 #### Soal
 Kemudian kalian diminta untuk membatasi akses ke Doriki yang berasal dari subnet Blueno, Cipher, Elena dan Fukuro dengan beraturan sebagai berikut
@@ -319,7 +336,7 @@ dapat dites dengan melakukan ping dari Cipher/Blueno ke Doriki
 
 ![4.2](./images/4.2.PNG)
 
-### No 5
+### <a name="soal5"></a> No 5
 #### Soal
 Akses dari subnet Elena dan Fukuro hanya diperbolehkan pada pukul 15.01 hingga pukul 06.59 setiap harinya.
 
@@ -365,7 +382,7 @@ dapat dites dengan melakukan ping dari Elena/Fukurou ke Doriki
 
 ![5.2](./images/5.2.PNG)
 
-### No 6
+### <a name="soal6"></a> No 6
 
 #### Soal
 Karena kita memiliki 2 Web Server, Luffy ingin Guanhao disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada Jorge dan Maingate
