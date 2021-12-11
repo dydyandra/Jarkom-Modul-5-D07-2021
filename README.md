@@ -71,7 +71,7 @@ Perhitungan tercantum pada link berikut: <a href="https://docs.google.com/spread
 ## <a name="bagi"></a> Pembagian IP
 ### <a name="tree"></a> Tree
 
-![vlsm tree](./images/0.3.PNG)
+![vlsm tree](./images/0.3.png)
 
 
 ### <a name="tabel"></a> Tabel 
